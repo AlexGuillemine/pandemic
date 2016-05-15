@@ -103,6 +103,7 @@ public class City implements ICity {
 	public Set<IPlayer> getPlayers() {
 		return players;
 	}
+	
 
 	@Override
 	public int addDiseaseCubes(DiseaseType t, int i) {
@@ -127,11 +128,7 @@ public class City implements ICity {
 	@Override
 	public void removeDeseaseCube(DiseaseType dt, int i) {
 		int nbreCubre = diseaseCubes.get(dt);
-		if(nbreCubre-i<0){
-			diseaseCubes.put(dt, new Integer(0));
-		}else{
-			diseaseCubes.put(dt, new Integer(nbreCubre-i));
-		}
+		diseaseCubes.put(dt, new Integer(nbreCubre-i));
 	}
 
 	@Override

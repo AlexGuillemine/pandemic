@@ -337,11 +337,15 @@ public class Player implements IPlayer {
 
 	public void treatDisease(DiseaseType dt) {
 		ICity currentLocation = this.getLocation();
-		Map<DiseaseType,Disease> disease = board.getDisease();
-		if(disease.get(dt).isCureFound() || this.role.equals(Role.Medic)){
-			currentLocation.removeDeseaseCube(dt, currentLocation.getDiseaseCubes(dt));
+		Map<DiseaseType,Disease> diseases = board.getDisease();
+		Disease disease = diseases.get(dt);
+		if(disease.isCureFound() || this.role.equals(Role.Medic)){
+			int nbCubeLocation = currentLocation.getDiseaseCubes(dt);
+			currentLocation.removeDeseaseCube(dt, nbCubeLocation);
+			disease.addDiseasePiece(nbCubeLocation);
 		}else{
 			currentLocation.removeDeseaseCube(dt, 1);
+			disease.addDiseasePiece(1);
 		}
 
 	}
