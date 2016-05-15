@@ -173,15 +173,7 @@ public class City implements ICity {
 	}
 
 
-
-
-
 	@Override
-	public String toString() {
-		return cityName.toString();
-	}
-
-
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -192,24 +184,17 @@ public class City implements ICity {
 		City other = (City) obj;
 		if (cityName != other.cityName)
 			return false;
-		if (diseaseCubes == null) {
-			if (other.diseaseCubes != null)
-				return false;
-		} else if (!diseaseCubes.equals(other.diseaseCubes))
-			return false;
-		if (diseaseType != other.diseaseType)
-			return false;
-		if (infected != other.infected)
-			return false;
-		if (players == null) {
-			if (other.players != null)
-				return false;
-		} else if (!players.equals(other.players))
-			return false;
-		if (researchLab != other.researchLab)
-			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return cityName.toString();
+	}
+
+
+
 
 
 }

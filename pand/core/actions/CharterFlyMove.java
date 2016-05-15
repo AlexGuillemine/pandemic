@@ -20,7 +20,7 @@ public class CharterFlyMove implements IMoveAction {
 		currentCity.removePlayer(currentPlayer);
 		currentPlayer.setLocation(possibleDestination);
 		possibleDestination.addPlayer(currentPlayer);
-		currentPlayer.removeCard(new PlayerCityCard(possibleDestination));
+		currentPlayer.removeCard(new PlayerCityCard(currentCity));
 		return 1;
 	}
 

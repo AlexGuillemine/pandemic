@@ -58,8 +58,6 @@ public class PlayerCityCard implements IPlayerCityCard {
 				return false;
 		} else if (!city.equals(other.city))
 			return false;
-		if (diseaseType != other.diseaseType)
-			return false;
 		return true;
 	}
 	
