@@ -176,11 +176,17 @@ public class Board implements IBoard {
 		IPropagationCard lastIPropagationCard = propagationStack.remove(propagationStack.size()-1); // la dernière carte est celle à la fin de la liste
 		ICity cityToInfect = lastIPropagationCard.getCity();
 		DiseaseType typeCityToInfect = cityToInfect.getType();
-		nbreCubes = cityToInfect.addDiseaseCubes(typeCityToInfect, 3);
-		removeDiseasePiece(3, typeCityToInfect);
-		if(nbreCubes ==4){
-			eclosion(cityToInfect);
+		if(!disease.get(typeCityToInfect).isEradicated()){
+			nbreCubes = cityToInfect.addDiseaseCubes(typeCityToInfect, 3);
+			removeDiseasePiece(3, typeCityToInfect);
+			if(nbreCubes ==4){
+				eclosion(cityToInfect);
+			}
+		}else{
+			JOptionPane jop1 = new JOptionPane();
+			jop1.showMessageDialog(null, "La carte "+lastIPropagationCard+" n' a aucun effet car la maladie correspondant est éradiquée", "Remède trouvée", JOptionPane.INFORMATION_MESSAGE);
 		}
+		
 		this.discardPropagationCard(lastIPropagationCard);
 
 		// on mélange la défausse propgation et on la remet sur le sommet de la pioche propagation
@@ -224,8 +230,6 @@ public class Board implements IBoard {
 	}
 
 	public void discardPropagationCard(IPropagationCard card) {
-		/*System.out.println("-------------------");
-		System.out.println(Arrays.toString(this.propagationDiscard.toArray()));*/
 		propagationDiscard.add(card);
 	}
 
@@ -269,11 +273,17 @@ public class Board implements IBoard {
 			discardPropagationCard(currentPropCard);
 			ICity cityToInfect = currentPropCard.getCity();
 			DiseaseType typeCityToInfect = cityToInfect.getType();
-			nbreCubes = cityToInfect.addDiseaseCubes(typeCityToInfect, 1);
-			removeDiseasePiece(1, typeCityToInfect);
-			if(nbreCubes == 4){
-				eclosion(cityToInfect);
+			if(disease.get(typeCityToInfect).isEradicated()){
+				JOptionPane jop1 = new JOptionPane();
+				jop1.showMessageDialog(null, "La carte "+currentPropCard+" n' a aucun effet car la maladie correspondant est éradiquée", "Remède trouvée", JOptionPane.INFORMATION_MESSAGE);
+			}else{
+				nbreCubes = cityToInfect.addDiseaseCubes(typeCityToInfect, 1);
+				removeDiseasePiece(1, typeCityToInfect);
+				if(nbreCubes == 4){
+					eclosion(cityToInfect);
+				}
 			}
+			
 		}
 		return(retour);
 	}
@@ -385,7 +395,8 @@ public class Board implements IBoard {
 	// pour faire la procédure d'éclosion
 	private void eclosion(ICity cityToEclose) {
 		JOptionPane jop1 = new JOptionPane();
-		jop1.showMessageDialog(null, "Eclosion de"+cityToEclose.toString(), "Eclosion", JOptionPane.INFORMATION_MESSAGE);
+		jop1.showMessageDialog(null, "Eclosion de "+cityToEclose, "Eclosion", JOptionPane.INFORMATION_MESSAGE);
+
 		outBreaks++;
 		if(outBreaks == Board.OUTBREAKS_LIMIT){
 			throw new LooseException("You lose : too much eclosions !");

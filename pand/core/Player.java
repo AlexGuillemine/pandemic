@@ -347,7 +347,6 @@ public class Player implements IPlayer {
 			currentLocation.removeDeseaseCube(dt, 1);
 			disease.addDiseasePiece(1);
 		}
-
 	}
 
 	public String toStringMain(){
