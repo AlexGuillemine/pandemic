@@ -13,6 +13,7 @@ import pand.core.actions.CharterFlyMove;
 import pand.core.actions.SimpleMove;
 import pand.core.cards.EpidemicCard;
 import pand.core.cards.PlayerCityCard;
+import pand.core.cards.QuietNight;
 import pandemie.core.IAction;
 import pandemie.core.IBoard;
 import pandemie.core.ICard;
@@ -25,6 +26,7 @@ import pandemie.core.Role;
 import pandemie.core.actions.BuildResearchLabAction;
 import pandemie.core.actions.IFindingCureAction;
 import pandemie.core.actions.IMoveAction;
+import pandemie.core.actions.SpecialEventCardAction;
 import pandemie.core.actions.TreatingAction;
 import pandemie.core.cards.IAirlift;
 import pandemie.core.cards.IKeepableCard;
@@ -43,7 +45,7 @@ public class Player implements IPlayer {
 	private ICity location;
 	private int maximumNumberOfCards;
 	private int numberOfActions;
-	private List<IAction> possibleSpecialEventCardActions;
+	
 
 
 	public Player(Role role, IBoard board){
@@ -66,7 +68,6 @@ public class Player implements IPlayer {
 			numberOfActions = 4;
 		}
 		//total number of actions allowed per turn. the role can change this number (default : 4 )
-		possibleSpecialEventCardActions = new ArrayList<IAction>() ;
 	}
 
 	public void addCard(IKeepableCard card) {
@@ -106,6 +107,7 @@ public class Player implements IPlayer {
 		possibleActions.addAll(this.getPossibleSharingInformationActions(board));
 		possibleActions.addAll(this.getPossibleFindingCureAction());
 		possibleActions.addAll(this.getPossibleBuildResearchLabAction());
+		possibleActions.addAll(this.getPossibleSpecialEventCardActions());
 		return possibleActions;
 	}
 
@@ -194,6 +196,12 @@ public class Player implements IPlayer {
 	}
 
 	public List<IAction> getPossibleSpecialEventCardActions() {
+		
+		List<IAction> possibleSpecialEventCardActions =  new ArrayList<IAction>() ;
+		List<IPlayableCard> specialCards = getSpecialEventCards();
+		for(IPlayableCard card : specialCards){
+			possibleSpecialEventCardActions.add(new SpecialEventCardAction(card, this));
+		}
 		return possibleSpecialEventCardActions;
 	}
 
@@ -238,6 +246,9 @@ public class Player implements IPlayer {
 		List<IPlayableCard> specialEventCards = new ArrayList<IPlayableCard>();
 		for(IKeepableCard card : cards){
 			if(card instanceof IAirlift){
+				specialEventCards.add((IPlayableCard)card);
+			}
+			if(card instanceof QuietNight){
 				specialEventCards.add((IPlayableCard)card);
 			}
 		}

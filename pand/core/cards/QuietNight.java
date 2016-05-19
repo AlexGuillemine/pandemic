@@ -11,5 +11,11 @@ public class QuietNight implements IKeepableCard, IPlayableCard {
 		t.setPropagationDisabled(true);
 	}
 
+	@Override
+	public String toString() {
+		return "QuietNight";
+	}
+	
+	
 	
 }

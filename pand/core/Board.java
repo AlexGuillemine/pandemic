@@ -263,10 +263,10 @@ public class Board implements IBoard {
 	// méthode qui permet de faire la phase propagation ( dernier pahse d'un tour )
 	// le jour tire un nombre de carte propagation égale à la vitesse de propagation et place un cube maladie sur chacunes des villes
 	public Collection<? extends IPropagationCard> propagation() {
-		citiesWhoCanEclose.addAll(villes);
 		int currentRate = infectionRate.getCurrentRate();
 		List<IPropagationCard> retour = new ArrayList<IPropagationCard>();
 		for(int i=1;i<=currentRate;i++){
+			citiesWhoCanEclose.addAll(villes);
 			int nbreCubes;
 			IPropagationCard currentPropCard = this.drawPropagationCard();
 			retour.add(currentPropCard);
