@@ -1,12 +1,12 @@
 package pand.core.test;
 import pand.core.*;
 import pandemie.core.CityName;
+import pandemie.core.Difficulty;
 import pandemie.core.ICity;
+import pandemie.core.IPlayer;
 import pandemie.core.IPlayer;
 import pandemie.core.Role;
 import pandemie.core.diseases.*;
-
-
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
@@ -15,85 +15,53 @@ import java.util.Set;
 import org.junit.Test;
 
 public class CityTest {
-	
+	//création des villes
 	City paris = new City(CityName.Paris, DiseaseType.BLACK );
 	City alger = new City(CityName.Alger, DiseaseType.BLACK );
 	City bagdad = new City(CityName.Bagdad, DiseaseType.RED );
 	City calcuta = new City(CityName.Calcuta, DiseaseType.RED );
 	
-	Player alex  = new Player(Role.Archivist);
-	Player laura = new Player(Role.ContainmentSpecialist);
-	Player aurelien = new Player(Role.ContingencyPlanner);
+	
+	//création d'un plateau avec 3 joueurs
+	
+	Board board1 = new Board(Difficulty.NOVICE,3);
+	
+	Player alexandre=new Player(Role.Archivist, board1);
+	Player laura=new Player(Role.ContainmentSpecialist, board1);
+	Player aurelien=new Player(Role.Generalist, board1);
+
+	
+	@Test
+	public void testSetResearchLab() {
+		paris.setResearchLab(false);
+		assertEquals(false,paris.hasResearchLab());
+	}
+	
+	
 	
 	@Test
 	public void testCompareTo() {
-		
 		assertEquals(paris.compareTo(alger), 1);
-		
 	}
 
 	@Test
 	public void testGetName() {
-		
 		assertEquals(paris.getName(), CityName.Paris);
-		
-	}
-
-	@Test
-	public void testGetDiseaseCubes() {
-		assertEquals(0,paris.getDiseaseCubes(DiseaseType.BLACK));
-		assertEquals(0,paris.getDiseaseCubes(DiseaseType.BLUE));
-		assertEquals(0,paris.getDiseaseCubes(DiseaseType.RED));
-		assertEquals(0,paris.getDiseaseCubes(DiseaseType.YELLOW));
 	}
 
 	@Test
 	public void testHasResearchLab() {
-		
 		assertEquals(false,paris.hasResearchLab());
 	}
 
 	@Test
-	public void testGetNeighbors() {
-		Set<ICity> expected = new HashSet<ICity>();
-		assertEquals(expected ,paris.getNeighbors());
-		paris.addNeighborCities(bagdad);
-		paris.addNeighborCities(alger);
-		expected.add(bagdad);
-		expected.add(alger);
-		assertEquals(expected ,paris.getNeighbors());
-	}
-
-	@Test
-	public void testGetType() {
-		assertEquals(DiseaseType.BLACK,paris.getType());
-	}
-
-	@Test
-	public void testGetPlayers() {
-		Set<IPlayer> expected = new HashSet<IPlayer>();
-		assertEquals(expected,paris.getPlayers());
-		paris.addPlayer(aurelien);
-		paris.addPlayer(alex);
-		expected.add(aurelien);
-		expected.add(alex);
-		assertEquals(expected ,paris.getPlayers());
-		
-	}
-
-	@Test
 	public void testAddDiseaseCubes() {
+		//ajout de 2 cubes noires et 1 cube rouge sur paris
 		paris.addDiseaseCubes(DiseaseType.BLACK, 2);
 		paris.addDiseaseCubes(DiseaseType.RED, 1);
 		assertEquals(2,paris.getDiseaseCubes(DiseaseType.BLACK));
 		assertEquals(1,paris.getDiseaseCubes(DiseaseType.RED));
 		
-	}
-
-	@Test
-	public void testSetResearchLab() {
-		paris.setResearchLab(true);
-		assertEquals(true,paris.hasResearchLab());
 	}
 
 	@Test
@@ -117,18 +85,18 @@ public class CityTest {
 	@Test
 	public void testAddPlayer() {
 		paris.addPlayer(aurelien);
-		paris.addPlayer(alex);
+		paris.addPlayer(alexandre);
 		Set<IPlayer> expected = new HashSet<IPlayer>();
 		expected.add(aurelien);
-		expected.add(alex);
+		expected.add(alexandre);
 		assertEquals(expected ,paris.getPlayers());
 	}
 
 	@Test
 	public void testRemovePlayer() {
 		paris.addPlayer(aurelien);
-		paris.addPlayer(alex);
-		paris.removePlayer(alex);
+		paris.addPlayer(alexandre);
+		paris.removePlayer(alexandre);
 		Set<IPlayer> expected = new HashSet<IPlayer>();
 		expected.add(aurelien);
 		assertEquals(expected ,paris.getPlayers());

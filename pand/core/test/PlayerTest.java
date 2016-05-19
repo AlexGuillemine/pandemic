@@ -2,163 +2,45 @@ package pand.core.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Map;
+
+import pand.core.Board;
+import pand.core.City;
+import pand.core.Game;
+import pand.core.Player;
+import pandemie.core.CityName;
+import pandemie.core.Difficulty;
+import pandemie.core.Role;
+import pandemie.core.diseases.DiseaseType;
+import pandemie.core.ITurn;
+import pandemie.impl.Turn;
+import pand.core.cards.PlayerCityCard;
+
 import org.junit.Test;
 
-import pand.core.Game;
-import pandemie.core.Difficulty;
+import pandemie.core.diseases.Disease;
 
-public class PlayerTest {
-
-	Game game = new Game(2, Difficulty.NOVICE);
-	
-	@Test
-	public void testAddCard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCardsToShare() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetLocation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetMaximumNumberOfCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNumberOfActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleMoveActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleFindingCureAction() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleSharingInformationActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleSpecialEventCardActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleTreatingActions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetPossibleBuildResearchLabAction() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testBuildResearchLab() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetRole() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetSpecialEventCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHasCardICity() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHasCardIPlayerCard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHasCardIKeepableCard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHasCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHasSomeThingToShare() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHowManyCardOfType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNbCardsRequiredToCure() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRemoveAllCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRemoveCard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetLocation() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testTooManyCards() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testTreatDisease() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToStringMain() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
+	public class PlayerTest {
+		Board board = new Board(Difficulty.NOVICE, 2);
+		Game game = new Game(2, Difficulty.NOVICE);
+		Player laura = new Player(Role.ContainmentSpecialist, board);
+		Turn turn = new Turn(game, laura);
+		City paris = new City(CityName.Paris, DiseaseType.BLACK);
+		City alger = new City(CityName.Alger, DiseaseType.BLACK);
+		Map<DiseaseType,Disease> diseases = board.getDisease();
+		Disease disease = diseases.get(DiseaseType.BLUE);
+		 
+		@Test
+		public void testTreatDisease() {
+			
+			paris.addDiseaseCubes(DiseaseType.BLUE, 3);
+			int z = disease.getDiseasePiece() ; 
+			System.out.println(z);
+			laura.setLocation(paris);
+			laura.treatDisease(DiseaseType.BLUE);
+			int h = paris.getDiseaseCubes(DiseaseType.BLUE);
+			System.out.println(h + "vilou" + disease.getDiseasePiece());
+		}
+		
 }
+
